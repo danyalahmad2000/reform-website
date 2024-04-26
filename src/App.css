@@ -19,8 +19,9 @@ body {
 }
 
 .dropdown.open {
-  max-height: 300px;
+  max-height: 600px;
   opacity: 1; /* Set opacity to 1 to reveal the dropdown content */
+  z-index: 1000;
 }
 
 

@@ -42,7 +42,6 @@ const navLinks = [
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-  const logoRef = useRef(null);
   const [stickyHeader, setStickyHeader] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({});
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -107,13 +106,12 @@ const Header = () => {
     >
       <div className="container flex justify-between items-center">
         {/* Logo */}
-        <div className="my-3" ref={logoRef}>
+        <div className="my-3">
           <Link to="/home" onClick={() => window.scrollTo(0, 0)}>
             <img
               src={logo}
               alt="Logo"
               style={{ width: "280px", height: "80px" }}
-              className="slide-in"
             />
           </Link>
         </div>
