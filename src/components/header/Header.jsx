@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { NavLink, Link } from "react-router-dom";
 import { BiMenu, BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -36,6 +36,21 @@ const navLinks = [
   {
     path: "/offers",
     display: "Offers",
+  },
+];
+
+const miniNavLinks = [
+  {
+    path: "/call",
+    display: "Call",
+  },
+  {
+    path: "/appointment",
+    display: "Appointment",
+  },
+  {
+    path: "/services",
+    display: "Services",
   },
 ];
 
@@ -98,109 +113,109 @@ const Header = () => {
   };
 
   return (
-    <header
-      className={`header background_image flex items-center ${
-        stickyHeader ? "sticky__header" : ""
-      }`}
-      ref={headerRef}
-    >
-      <div className="container flex justify-between items-center">
-        {/* Logo */}
-        <div className="my-3">
-          <Link to="/home" onClick={() => window.scrollTo(0, 0)}>
-            <img
-              src={logo}
-              alt="Logo"
-              style={{ width: "280px", height: "80px" }}
-            />
-          </Link>
+    <>
+      {/* Mini header */}
+      <header className={`mini-header background_image flex justify-between items-center ${stickyHeader ? "sticky__header" : ""}`}>
+        <div className="container flex justify-center items-center">
+          {miniNavLinks.map((link, index) => (
+            <div key={index} className="bg-primaryColor mx-[1px]">
+              <NavLink
+                to={link.path}
+                className="text-white text-[16px] leading-7 font-[600] mx-3 hover:text-secondaryColor"
+              >
+                {link.display}
+              </NavLink>
+            </div>
+          ))}
         </div>
+      </header>
 
-        {/* Menu */}
-        <div className="navigation" ref={menuRef}>
-          <div className="menu-wrapper border border-primaryColor rounded-lg px-[50px] py-[5px]">
-            <ul className="menu flex items-center gap-[2.7rem] ">
-              {navLinks.map((link, index) => (
-                <li
-                  key={index}
-                  onMouseEnter={() => handleMouseEnter(link.path)}
-                  onMouseLeave={() => handleMouseLeave(link.path)}
-                  className="slide-in"
-                >
-                  <div
-                    className="relative flex items-center"
-                    onMouseEnter={() => setHoveredItem(index)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                  >
-                    <NavLink
-                      to={link.path}
-                      onClick={() => {
-                        smoothScroll(link.path.substr(1));
-                      }}
-                      isActive={(match, location) => {
-                        if (link.path === "/home") {
-                          return location.pathname === "/";
-                        }
-                        return location.pathname.includes(link.path);
-                      }}
-                      className={`text-textColor text-[16px] leading-7 font-[800] hover:text-primaryColor`}
-                      style={{
-                        transform:
-                          hoveredItem === index ? "scale(1.05)" : "scale(1)",
-                        transition: "transform 0.2s",
-                      }}
-                    >
-                      {link.display}
-                    </NavLink>
-                    {link.submenu && dropdownOpen[link.path] && (
-                      <BiChevronUp className="ml-1 text-primaryColor pointer-events-none" />
-                    )}
-                    {link.submenu && !dropdownOpen[link.path] && (
-                      <BiChevronDown className="ml-1 text-primaryColor pointer-events-none" />
-                    )}
-                    {link.submenu && (
-                      <ul
-                        className={`dropdown top-[35px] rounded-[20px] absolute bg-subMenuColor shadow-lg p-2 transition-all duration-300 ease-in-out ${
-                          dropdownOpen[link.path] ? "open" : ""
-                        }`}
-                        style={{ minWidth: "250px" }}
-                        onMouseEnter={() => setHoveredItem(index)}
-                        onMouseLeave={() => setHoveredItem(null)}
-                      >
-                        {link.submenu.map((submenuItem, subIndex) => (
-                          <li
-                            key={subIndex}
-                            className="text-textColor font-[600] hover:text-primaryColor"
-                            onMouseEnter={() => setHoveredSubItem(subIndex)}
-                            onMouseLeave={() => setHoveredSubItem(null)}
-                            style={{
-                              transform:
-                                hoveredSubItem === subIndex
-                                  ? "scale(1.05)"
-                                  : "scale(1)",
-                              transition: "transform 0.2s",
-                            }}
-                          >
-                            <NavLink to={submenuItem.path}>
-                              {submenuItem.display}
-                            </NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+      {/* Main header */}
+      <header className={`header background_image flex items-center ${stickyHeader ? "sticky__header" : ""}`} ref={headerRef}>
+        <div className="container flex justify-between items-center">
+          {/* Logo */}
+          <div className="my-3">
+            <Link to="/home" onClick={() => window.scrollTo(0, 0)}>
+              <img src={logo} alt="Logo" style={{ width: "280px", height: "80px" }} />
+            </Link>
           </div>
-        </div>
 
-        {/* Menu Button (Mobile) */}
-        <span className="md:hidden" onClick={toggleMenu}>
-          <BiMenu className="w-6 h-6 cursor-pointer" />
-        </span>
-      </div>
-    </header>
+          {/* Menu */}
+          <div className="navigation" ref={menuRef}>
+            <div className="menu-wrapper border border-primaryColor rounded-lg px-[50px] py-[5px]">
+              <ul className="menu flex items-center gap-[2.7rem]">
+                {navLinks.map((link, index) => (
+                  <li
+                    key={index}
+                    onMouseEnter={() => handleMouseEnter(link.path)}
+                    onMouseLeave={() => handleMouseLeave(link.path)}
+                    className="slide-in"
+                  >
+                    <div
+                      className="relative flex items-center"
+                      onMouseEnter={() => setHoveredItem(index)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                    >
+                      <NavLink
+                        to={link.path}
+                        onClick={() => { smoothScroll(link.path.substr(1)); }}
+                        isActive={(match, location) => {
+                          if (link.path === "/home") {
+                            return location.pathname === "/";
+                          }
+                          return location.pathname.includes(link.path);
+                        }}
+                        className={`text-textColor text-[16px] leading-7 font-[800] hover:text-primaryColor`}
+                        style={{
+                          transform: hoveredItem === index ? "scale(1.05)" : "scale(1)",
+                          transition: "transform 0.2s",
+                        }}
+                      >
+                        {link.display}
+                      </NavLink>
+                      {link.submenu && dropdownOpen[link.path] && (
+                        <BiChevronUp className="ml-1 text-primaryColor pointer-events-none" />
+                      )}
+                      {link.submenu && !dropdownOpen[link.path] && (
+                        <BiChevronDown className="ml-1 text-primaryColor pointer-events-none" />
+                      )}
+                      {link.submenu && (
+                        <ul
+                          className={`dropdown top-[35px] rounded-[20px] absolute bg-subMenuColor shadow-lg p-2 transition-all duration-300 ease-in-out ${dropdownOpen[link.path] ? "open" : ""}`}
+                          style={{ minWidth: "250px" }}
+                          onMouseEnter={() => setHoveredItem(index)}
+                          onMouseLeave={() => setHoveredItem(null)}
+                        >
+                          {link.submenu.map((submenuItem, subIndex) => (
+                            <li
+                              key={subIndex}
+                              className="text-textColor font-[600] hover:text-primaryColor"
+                              onMouseEnter={() => setHoveredSubItem(subIndex)}
+                              onMouseLeave={() => setHoveredSubItem(null)}
+                              style={{
+                                transform: hoveredSubItem === subIndex ? "scale(1.05)" : "scale(1)",
+                                transition: "transform 0.2s",
+                              }}
+                            >
+                              <NavLink to={submenuItem.path}>{submenuItem.display}</NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Menu Button (Mobile) */}
+          <span className="md:hidden" onClick={toggleMenu}>
+            <BiMenu className="w-6 h-6 cursor-pointer" />
+          </span>
+        </div>
+      </header>
+    </>
   );
 };
 
