@@ -1,0 +1,35 @@
+/* hero.css */
+.hero-content h1 {
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideIn 1s forwards;
+  }
+
+  .hero-content .text__para {
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideIn 1s forwards;
+    animation-delay: 0.5s;
+  }
+
+  .btn{
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideIn 1s forwards;
+    animation-delay: 1s;
+  }
+
+  .hero-image {
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideIn 1s forwards;
+    animation-delay: 1.5s; /* Delay the animation for the image */
+  }
+  
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  

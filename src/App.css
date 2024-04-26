@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+/* Dropdown transition */
+.dropdown {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0; /* Initially, set opacity to 0 to hide the dropdown */
+  transition: max-height 0.3s ease, opacity 0.3s ease; /* Apply transition effect */
+}
+
+.dropdown.open {
+  max-height: 300px;
+  opacity: 1; /* Set opacity to 1 to reveal the dropdown content */
+}
+
+
+
+
